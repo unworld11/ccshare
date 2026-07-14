@@ -1,0 +1,20 @@
+{
+  "name": "ccshare",
+  "version": "0.1.0",
+  "description": "Multiplayer Claude Code - share your live session with a code, like AirDrop",
+  "license": "MIT",
+  "bin": {
+    "ccshare": "bin/ccshare.js"
+  },
+  "scripts": {
+    "test": "node test/smoke.js",
+    "postinstall": "chmod +x node_modules/node-pty/prebuilds/*/spawn-helper 2>/dev/null || true"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "node-pty": "^1.0.0",
+    "ws": "^8.18.0"
+  }
+}
