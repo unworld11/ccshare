@@ -41,13 +41,19 @@ automatically - no IPs. `Ctrl-]` detaches a joiner without touching the session.
 
 Three options, easiest first:
 
-- **Tunnel:** `ccshare host --tunnel` opens a free Cloudflare quick tunnel (needs
-  `brew install cloudflared`, no account) and prints a join command like
-  `ccshare join 7KQ2FM --host wss://random-words.trycloudflare.com` that works from
-  anywhere. The URL is random, unguessable, and dies with your session. The host
-  waits until the tunnel actually routes before printing it, and join falls back to
+- **Tunnel (on by default):** when `cloudflared` is installed (`brew install
+  cloudflared`, no account needed), hosting opens a free Cloudflare quick tunnel in
+  the background. A few seconds later the remote join command - like
+  `ccshare join 7KQ2FM --host wss://random-words.trycloudflare.com` - appears in the
+  menu bar ("copy remote join command") and in `ccshare code`. That command works
+  from any network. The URL is random, unguessable, and dies with your session.
+  `--tunnel` waits at startup so the link prints in the banner instead;
+  `--no-tunnel` keeps the session off the internet entirely. Join falls back to
   resolving fresh tunnel hostnames via 1.1.1.1 when the OS resolver has a stale
   negative answer.
+
+  Note for friends who cloned early: joining a `wss://` URL needs the current
+  version, so have them `git pull` in their ccshare checkout.
 - **Tailscale (or any reachable IP):** the host banner prints a direct line like
   `ccshare join 7KQ2FM --host 192.168.1.4:42518` - swap in the tailnet IP and it
   connects straight through, no extra server.

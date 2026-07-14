@@ -12,8 +12,11 @@ const HELP = `ccshare - multiplayer claude code
       --read-only      joiners can watch but not type
       --max <n>        max simultaneous joiners (default 5)
       --cmd <bin>      run something other than 'claude'
-      --tunnel         friends anywhere, zero setup: free cloudflare quick
-                       tunnel (needs cloudflared: brew install cloudflared)
+      --tunnel         wait for the cloudflare tunnel at startup so the
+                       banner shows the remote join link
+      --no-tunnel      don't open a tunnel. tunnels are on by default when
+                       cloudflared is installed (brew install cloudflared);
+                       the link appears in the menu bar and 'ccshare code'
       --no-menubar     don't start the macOS menu bar helper
       -- <args>        everything after -- goes to claude (e.g. -- --resume)
 
@@ -91,6 +94,7 @@ if (cmd === 'host') {
     '--max=': 'max',
     '--cmd=': 'cmd',
     '--tunnel': 'tunnel',
+    '--no-tunnel': 'noTunnel',
     '--no-menubar': 'noMenubar',
   });
   const relay = o.noRelay ? null : (o.relay || process.env.CCSHARE_RELAY || null);
@@ -102,6 +106,7 @@ if (cmd === 'host') {
     max: o.max ? Number(o.max) : undefined,
     cmd: o.cmd || 'claude',
     tunnel: !!o.tunnel,
+    noTunnel: !!o.noTunnel,
     noMenubar: !!o.noMenubar,
     claudeArgs: o.rest || [],
   }).catch((e) => die('ccshare: ' + e.message));
@@ -131,6 +136,7 @@ if (cmd === 'host') {
       const dir = require('path').basename(s.cwd || '');
       const who = s.names && s.names.length ? ` (${s.names.join(', ')})` : '';
       console.log(`${s.code}  ${dir}  ${s.joiners || 0} connected${who}  port ${s.port}`);
+      if (s.tunnel) console.log(`        anywhere: ccshare join ${s.code} --host ${s.tunnel}`);
     }
   }
 } else if (cmd === 'menubar') {
