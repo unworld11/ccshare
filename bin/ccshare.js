@@ -123,6 +123,9 @@ if (cmd === 'host') {
     '--no-menubar': 'noMenubar',
   });
   const relay = o.noRelay ? null : (o.relay || process.env.CCSHARE_RELAY || null);
+  for (const [flag, key] of [['--port', 'port'], ['--max', 'max']]) {
+    if (o[key] !== undefined && !/^\d+$/.test(String(o[key]))) die(`${flag} must be a number (got '${o[key]}')`);
+  }
   (async () => {
     const config = require('../lib/config');
     // first ever run: onboard before hosting (Ctrl-C skips, saves defaults)

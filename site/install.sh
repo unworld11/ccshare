@@ -6,6 +6,13 @@ set -e
 REPO="https://github.com/unworld11/ccshare"
 DIR="${CCSHARE_DIR:-$HOME/ccshare}"
 
+for tool in git node npm; do
+  if ! command -v "$tool" >/dev/null 2>&1; then
+    echo "ccshare: $tool is required but not installed - install it and re-run"
+    exit 1
+  fi
+done
+
 if [ -d "$DIR/.git" ]; then
   echo "ccshare: found existing install at $DIR - updating"
   # npm install rewrites the lockfile; that isn't a user edit

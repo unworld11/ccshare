@@ -7,7 +7,7 @@
     "ccshare": "bin/ccshare.js"
   },
   "scripts": {
-    "test": "node test/smoke.js",
+    "test": "node test/smoke.js && node test/edges.js",
     "postinstall": "chmod +x node_modules/node-pty/prebuilds/*/spawn-helper 2>/dev/null || true"
   },
   "engines": {
