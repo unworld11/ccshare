@@ -1,5 +1,7 @@
 # ccshare - multiplayer Claude Code
 
+**[getccshare.vercel.app](https://getccshare.vercel.app)**
+
 Share your live Claude Code session with friends using a short code, AirDrop-style.
 The host runs Claude in a PTY and mirrors the terminal; everyone who joins sees the
 same screen and (unless you say otherwise) can type into the same session. Works in
