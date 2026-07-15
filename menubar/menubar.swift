@@ -29,6 +29,7 @@ struct SessionState: Codable {
     let joiners: Int?
     let names: [String]?
     let tunnel: String?
+    let tunnelOpening: Bool?
     let browser: String?
     let cmd: String?
     let readOnly: Bool?
@@ -81,6 +82,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var lastSnapshot = "\u{0}"
     var emptySince: Date? = nil
     var flashUntil: Date? = nil
+    // pids where we clicked "open anywhere link" - drives the ready/failed
+    // notifications; the loading row itself follows the host's tunnelOpening
+    var tunnelAsked: [Int32: Date] = [:]
     let auto = CommandLine.arguments.contains("--auto")
 
     func applicationDidFinishLaunching(_ n: Notification) {
@@ -128,14 +132,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
             lastCounts[s.pid] = cur
             lastNames[s.pid] = names
+
+            // close the loop on "open anywhere link" clicks
+            if let asked = tunnelAsked[s.pid] {
+                if s.tunnel != nil {
+                    tunnelAsked.removeValue(forKey: s.pid)
+                    notify("anywhere link is ready \u{00b7} \(s.code)")
+                } else if Date().timeIntervalSince(asked) > 90 {
+                    tunnelAsked.removeValue(forKey: s.pid)
+                    notify("anywhere link didn't come up \u{00b7} \(s.code) - check the host terminal")
+                }
+            }
         }
+        tunnelAsked = tunnelAsked.filter { pid, _ in sessions.contains { $0.pid == pid } }
 
         // don't stomp the "copied ✓" flash mid-display
         if let f = flashUntil, Date() < f { return }
         flashUntil = nil
 
         // avoid rebuilding the menu (and closing it under the cursor) when nothing changed
-        let snapshot = sessions.map { "\($0.pid):\($0.code):\($0.joiners ?? 0):\(($0.names ?? []).joined(separator: ",")):\($0.tunnel ?? "-"):\($0.browser ?? "-"):\($0.recording ?? "-"):\($0.readOnly ?? false)" }.joined(separator: "|")
+        let snapshot = sessions.map { "\($0.pid):\($0.code):\($0.joiners ?? 0):\(($0.names ?? []).joined(separator: ",")):\($0.tunnel ?? "-"):\($0.tunnelOpening ?? false):\($0.browser ?? "-"):\($0.recording ?? "-"):\($0.readOnly ?? false)" }.joined(separator: "|")
+            + ":asked=\(tunnelAsked.keys.sorted())"
         if snapshot == lastSnapshot { return }
         lastSnapshot = snapshot
 
@@ -202,7 +219,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 addRow(menu, "copy direct join command", icon: "network", action: #selector(copyItem(_:)), payload: "ccshare join \(s.code) --host \(ip):\(port)")
             }
             if let t = s.tunnel {
-                addRow(menu, "copy remote join command", icon: "globe", action: #selector(copyItem(_:)), payload: "ccshare join \(s.code) --host \(t)")
+                addRow(menu, "copy anywhere join command", icon: "globe", action: #selector(copyItem(_:)), payload: "ccshare join \(s.code) --host \(t)")
+                addRow(menu, "copy anywhere terminal link", icon: "link", action: #selector(copyItem(_:)), payload: t)
+            } else if s.tunnelOpening == true || tunnelAsked[s.pid] != nil {
+                addRow(menu, "opening anywhere link\u{2026}", icon: "hourglass")
             } else {
                 // same mechanism as `ccshare tunnel`: drop a request file, the
                 // host picks it up within a couple of seconds
@@ -245,9 +265,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc func openTunnel(_ sender: NSMenuItem) {
-        guard let pid = sender.representedObject as? String else { return }
-        let req = stateDir.appendingPathComponent("\(pid).tunnel-request")
+        guard let s = sender.representedObject as? String, let pid = Int32(s) else { return }
+        let req = stateDir.appendingPathComponent("\(s).tunnel-request")
         try? Data().write(to: req)
+        // show the loading row right away; the host's tunnelOpening flag takes
+        // over once it picks the request up (within ~2s)
+        tunnelAsked[pid] = Date()
         flash("opening\u{2026}")
     }
 

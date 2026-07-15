@@ -198,6 +198,7 @@ if (cmd === 'host') {
       const who = s.names && s.names.length ? ` (${s.names.join(', ')})` : '';
       console.log(`${s.code}  ${dir}  ${s.joiners || 0} connected${who}  port ${s.port}`);
       if (s.tunnel) console.log(`        anywhere: ccshare join ${s.code} --host ${s.tunnel}`);
+      else if (s.tunnelOpening) console.log('        anywhere: link opening…');
       if (s.browser) console.log(`        browser:  ${s.browser}`);
     }
   }

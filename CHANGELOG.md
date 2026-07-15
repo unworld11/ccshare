@@ -4,6 +4,24 @@ ccshare installs and updates straight from git (`ccshare update` is a `git pull`
 so what you actually run is `master` HEAD - these tags just mark the points worth
 naming.
 
+## 0.3.1
+
+- **The menu bar shows tunnel progress.** "open anywhere link" used to flash
+  "opening…" for a second and then look exactly like before while cloudflared
+  took its 5-20 seconds. Now the row turns into a live "opening anywhere link…"
+  state until the link is up (including the default background tunnel at
+  startup), you get a notification when it's ready or when it gives up, and
+  `ccshare code` prints "anywhere: link opening…" in the meantime.
+- **Copy the anywhere link in two shapes.** Once the tunnel is live the menu
+  offers "copy anywhere join command" (the full `ccshare join …` line) and
+  "copy anywhere terminal link" (just the wss:// url), alongside the browser
+  link.
+- **`ccshare update` explains itself.** It now prints the version you went from
+  and to, echoes the changelog headlines for every version you crossed, and
+  gives specific fixes when you're offline, have local changes, or your clone
+  diverged - instead of raw git/npm output that ended in an ambiguous "up to
+  date" even when it did just update you.
+
 ## 0.3.0
 
 - **Join from a browser.** The host now serves an xterm.js terminal page on its
