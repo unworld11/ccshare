@@ -2,6 +2,11 @@
 
 **[getccshare.vercel.app](https://getccshare.vercel.app)**
 
+[![GitHub stars](https://img.shields.io/github/stars/unworld11/ccshare?style=flat&color=d97757&label=stars)](https://github.com/unworld11/ccshare/stargazers)
+[![latest release](https://img.shields.io/github/v/release/unworld11/ccshare?style=flat&color=86c48e&label=release)](https://github.com/unworld11/ccshare/releases)
+[![license](https://img.shields.io/github/license/unworld11/ccshare?style=flat&color=8a94a0)](LICENSE)
+[![Product Hunt](https://img.shields.io/badge/Product%20Hunt-ccshare-da552f?style=flat)](https://www.producthunt.com/products/ccshare)
+
 Share your live Claude Code session with friends using a short code, AirDrop-style.
 The host runs your agent in a PTY and mirrors the terminal; everyone who joins sees
 the same screen and (unless you say otherwise) can type into the same session. Works
