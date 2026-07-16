@@ -7,7 +7,7 @@ const path = require('path');
 const http = require('http');
 const WebSocket = require('ws');
 
-const BIN = path.join(__dirname, '..', 'bin', 'ccshare.js');
+const BIN = path.join(__dirname, '..', 'bin', 'manycode.js');
 let failures = 0;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -78,7 +78,7 @@ function joinTrace(port, code, timeoutMs = 5000) {
   // version prints the package version
   const p4 = run(['version']);
   await wait(500);
-  check('version prints a number', /ccshare \d+\.\d+\.\d+/.test(p4.out()), p4.out().trim().slice(0, 60));
+  check('version prints a number', /manycode \d+\.\d+\.\d+/.test(p4.out()), p4.out().trim().slice(0, 60));
 
   // stop with no sessions is a clean message, not a crash
   const p5 = run(['stop']);
@@ -106,7 +106,7 @@ function joinTrace(port, code, timeoutMs = 5000) {
       res.on('end', () => resolve({ status: res.statusCode, body }));
     }).on('error', () => resolve({ status: 0, body: '' }));
   });
-  check('browser join page served', page.status === 200 && page.body.includes('xterm') && page.body.includes('ccshare'),
+  check('browser join page served', page.status === 200 && page.body.includes('xterm') && page.body.includes('manycode'),
     `status ${page.status}`);
   h3.p.kill('SIGKILL');
 
@@ -125,7 +125,7 @@ function joinTrace(port, code, timeoutMs = 5000) {
   h5.p.kill('SIGKILL');
 
   // --record: cast file with a v2 header and the session output, saved on SIGTERM
-  const recDir = fs.mkdtempSync(path.join(os.tmpdir(), 'ccshare-rec-'));
+  const recDir = fs.mkdtempSync(path.join(os.tmpdir(), 'manycode-rec-'));
   const h6 = run(['host', '--no-relay', '--no-menubar', '--no-tunnel', '--port', '45974', '--code', 'RECC42', '--record', 'bash', '-c', 'echo MARKER_CAST; sleep 15'], { cwd: recDir });
   await wait(2000);
   h6.p.kill('SIGTERM');

@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ccshare - multiplayer claude code</title>
+    <title>manycode - multiplayer coding agents</title>
     <meta name="description" content="Share your live Claude Code session with a 6-char code, AirDrop-style. Your friend joins from their terminal - or just opens a link in their browser - sees your exact screen, and both of you can type." />
-    <meta property="og:title" content="ccshare - multiplayer claude code" />
+    <meta property="og:title" content="manycode - multiplayer coding agents" />
     <meta property="og:description" content="Share your live Claude Code session with a 6-char code, AirDrop-style. Friends can join from any browser, nothing to install. Open source, no accounts, no telemetry." />
     <meta property="og:type" content="website" />
     <meta name="theme-color" content="#0b0d10" />
@@ -91,25 +91,25 @@
   <body>
     <div class="col-wide">
       <nav class="nav">
-        <a class="wordmark" href="#"><span class="green">$</span> ccshare</a>
+        <a class="wordmark" href="#"><span class="green">$</span> manycode</a>
         <div class="navlinks">
           <a class="navlink" href="#how">how it works</a>
           <a class="navlink" href="#security">security</a>
-          <a class="navlink" href="https://github.com/unworld11/ccshare">github</a>
+          <a class="navlink" href="https://github.com/unworld11/manycode">github</a>
         </div>
       </nav>
     </div>
 
     <header class="hero col-narrow">
-      <h1 class="h1"><span class="h1line">multiplayer</span><span class="h1line">claude code<span class="orange">.</span></span></h1>
+      <h1 class="h1"><span class="h1line">multiplayer</span><span class="h1line">coding agents<span class="orange">.</span></span></h1>
       <p class="lede">share your live Claude Code session with a 6-char code, AirDrop-style. your friend joins from their terminal - or just <b>opens a link in their browser</b>, nothing to install - sees your exact screen, and <b>both of you can type</b>. works over your wifi with zero setup, or anywhere through a free tunnel.</p>
       <div class="install">
         <span class="install-prompt">$</span>
-        <span class="install-scroll" id="install-cmd">curl -fsSL https://getccshare.vercel.app/install.sh | sh</span>
+        <span class="install-scroll" id="install-cmd">curl -fsSL https://manycode.vercel.app/install.sh | sh</span>
         <button class="copybtn" id="copybtn" type="button">copy</button>
       </div>
-      <p class="hero-sub">installs to ~/ccshare, onboards you on first run; re-run the same command to update &middot; MIT &middot; no accounts &middot; no telemetry &middot; <a href="https://github.com/unworld11/ccshare">source on github</a></p>
-      <a class="ph-badge" href="https://www.producthunt.com/products/ccshare?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-ccshare" target="_blank" rel="noopener noreferrer"><img alt="ccshare - multiplayer claude code | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1196065&amp;theme=dark&amp;t=1784018637191"></a>
+      <p class="hero-sub">installs to ~/manycode, onboards you on first run; re-run the same command to update &middot; MIT &middot; no accounts &middot; no telemetry &middot; <a href="https://github.com/unworld11/manycode">source on github</a></p>
+      <a class="ph-badge" href="https://www.producthunt.com/products/ccshare?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-manycode" target="_blank" rel="noopener noreferrer"><img alt="manycode - multiplayer claude code | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1196065&amp;theme=dark&amp;t=1784018637191"></a>
     </header>
 
     <section class="section col-wide">
@@ -118,14 +118,14 @@
           <div class="term-bar"><div class="term-dots"><span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span></div><span class="term-title">you</span></div>
           <div class="term-body">
             <div class="tline reveal" style="animation-delay:0.3s"><span class="green">$</span> cd my-project</div>
-            <div class="tline reveal" style="animation-delay:0.9s"><span class="green">$</span> ccshare host</div>
+            <div class="tline reveal" style="animation-delay:0.9s"><span class="green">$</span> manycode host</div>
             <div class="tline reveal" style="animation-delay:1.7s">&nbsp;</div>
-            <div class="tline reveal banner-line" style="animation-delay:1.7s">  &#9472;&#9472;&#9472; ccshare &#9472;&#9472;&#9472; multiplayer claude code &#9472;&#9472;&#9472;</div>
+            <div class="tline reveal banner-line" style="animation-delay:1.7s">  &#9472;&#9472;&#9472; manycode &#9472;&#9472;&#9472; multiplayer claude code &#9472;&#9472;&#9472;</div>
             <div class="tline reveal" style="animation-delay:1.9s">&nbsp;</div>
             <div class="tline reveal bigcode" style="animation-delay:2.1s">  7KQ 2FM</div>
             <div class="tline reveal" style="animation-delay:2.3s">&nbsp;</div>
-            <div class="tline reveal dim" style="animation-delay:2.5s">  same wifi:   ccshare join 7KQ2FM</div>
-            <div class="tline reveal dim" style="animation-delay:2.7s">  direct:      ccshare join 7KQ2FM --host 192.168.1.4:42518</div>
+            <div class="tline reveal dim" style="animation-delay:2.5s">  same wifi:   manycode join 7KQ2FM</div>
+            <div class="tline reveal dim" style="animation-delay:2.7s">  direct:      manycode join 7KQ2FM --host 192.168.1.4:42518</div>
             <div class="tline reveal dim" style="animation-delay:2.9s">  browser:     https://ideal-times-sing.trycloudflare.com/#7KQ2FM</div>
             <div class="tline reveal" style="animation-delay:3.1s">&nbsp;</div>
             <div class="tline reveal green" style="animation-delay:6.4s">  * friend connected</div>
@@ -134,9 +134,9 @@
         <div class="term">
           <div class="term-bar"><div class="term-dots"><span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span></div><span class="term-title">your friend, same wifi</span></div>
           <div class="term-body">
-            <div class="tline reveal" style="animation-delay:4.2s"><span class="green">$</span> ccshare join 7KQ2FM</div>
-            <div class="tline reveal dim" style="animation-delay:5.2s">ccshare: looking for the session on your network&hellip;</div>
-            <div class="tline reveal dim" style="animation-delay:6.4s">ccshare: connected (lan). Ctrl-] to leave.</div>
+            <div class="tline reveal" style="animation-delay:4.2s"><span class="green">$</span> manycode join 7KQ2FM</div>
+            <div class="tline reveal dim" style="animation-delay:5.2s">manycode: looking for the session on your network&hellip;</div>
+            <div class="tline reveal dim" style="animation-delay:6.4s">manycode: connected (lan). Ctrl-] to leave.</div>
             <div class="tline reveal" style="animation-delay:7.0s">&nbsp;</div>
             <div class="tline reveal" style="animation-delay:7.2s"><span class="orange">&#9581;&#9472;</span> your claude session renders here, live</div>
             <div class="tline reveal" style="animation-delay:7.4s"><span class="orange">&#9474;</span>  same screen. same prompt. both keyboards work.</div>
@@ -154,7 +154,7 @@
         <div class="step">
           <div class="step-num">01</div>
           <div class="step-name">host</div>
-          <div class="step-body"><code>ccshare host</code> wraps claude in a real pty and prints a code. you keep using claude exactly as before.</div>
+          <div class="step-body"><code>manycode host</code> wraps claude in a real pty and prints a code. you keep using claude exactly as before.</div>
         </div>
         <div class="step">
           <div class="step-num">02</div>
@@ -164,7 +164,7 @@
         <div class="step">
           <div class="step-num">03</div>
           <div class="step-name">join</div>
-          <div class="step-body"><code>ccshare join 7KQ2FM</code> attaches read-write. no terminal handy? they open the browser link instead - same live session, from any device. <code>Ctrl-]</code> detaches without killing it.</div>
+          <div class="step-body"><code>manycode join 7KQ2FM</code> attaches read-write. no terminal handy? they open the browser link instead - same live session, from any device. <code>Ctrl-]</code> detaches without killing it.</div>
         </div>
       </div>
     </section>
@@ -177,14 +177,14 @@
         <li class="feat"><span class="feat-name">smallest terminal wins</span><span class="feat-desc">the pty resizes to the smallest connected terminal, tmux-style, so everyone sees the same frame. joiners get 256KB of scrollback replayed plus a forced repaint.</span></li>
         <li class="feat"><span class="feat-name">tunnel anywhere</span><span class="feat-desc">hosting opens a free cloudflare quick tunnel by default. cloudflared comes bundled, no account needed. friends on any network join through a random wss:// url that dies with your session. <code>--no-tunnel</code> keeps it lan-only.</span></li>
         <li class="feat"><span class="feat-name">join from a browser</span><span class="feat-desc">every session has a link like <code>https://&hellip;.trycloudflare.com/#7KQ2FM</code> that opens a full live terminal in any browser - phone included. nothing to install, code prefilled, same screen and typing as the cli.</span></li>
-        <li class="feat"><span class="feat-name">approve each joiner</span><span class="feat-desc"><code>ccshare host --approve</code> holds every joiner - right code and all - until you click allow in a macos dialog. make it your default with <code>ccshare setup</code>.</span></li>
-        <li class="feat"><span class="feat-name">record the session</span><span class="feat-desc"><code>ccshare host --record</code> saves an asciinema .cast of everything everyone saw. replay it with <code>asciinema play</code> or upload it to asciinema.org.</span></li>
+        <li class="feat"><span class="feat-name">approve each joiner</span><span class="feat-desc"><code>manycode host --approve</code> holds every joiner - right code and all - until you click allow in a macos dialog. make it your default with <code>manycode setup</code>.</span></li>
+        <li class="feat"><span class="feat-name">record the session</span><span class="feat-desc"><code>manycode host --record</code> saves an asciinema .cast of everything everyone saw. replay it with <code>asciinema play</code> or upload it to asciinema.org.</span></li>
         <li class="feat"><span class="feat-name">menu bar code</span><span class="feat-desc">on macos, hosting puts your live code and joiner count in the menu bar: copy join commands or the browser link, open the anywhere-tunnel, end the session, get a ping when friends come and go. the icon turns into a globe when the anywhere link is ready.</span></li>
-        <li class="feat"><span class="feat-name">relay, if you'd rather self-host</span><span class="feat-desc">run <code>ccshare relay</code> on any box you own. it is a dumb pipe that pairs rooms by code and forwards frames. set <code>CCSHARE_RELAY</code> once and host/join fall back to it automatically.</span></li>
-        <li class="feat"><span class="feat-name">direct over tailscale</span><span class="feat-desc"><code>ccshare join CODE --host 100.x.y.z:42518</code> connects straight through. no relay, no extra server.</span></li>
-        <li class="feat"><span class="feat-name">read-only mode</span><span class="feat-desc"><code>ccshare host --read-only</code> lets friends watch a session without touching it. good for demos and rubber-ducking.</span></li>
-        <li class="feat"><span class="feat-name">not just claude</span><span class="feat-desc"><code>ccshare host codex</code>, <code>ccshare host opencode</code>, <code>ccshare host kimi</code> - it is a pty mirror, so every terminal agent works. claude is just the default.</span></li>
-        <li class="feat"><span class="feat-name">30-second onboarding</span><span class="feat-desc"><code>ccshare setup</code> (auto on first host) asks your name, finds the agents you have installed, and saves your defaults to <code>~/.ccshare/config.json</code>. flags always override.</span></li>
+        <li class="feat"><span class="feat-name">relay, if you'd rather self-host</span><span class="feat-desc">run <code>manycode relay</code> on any box you own. it is a dumb pipe that pairs rooms by code and forwards frames. set <code>CCSHARE_RELAY</code> once and host/join fall back to it automatically.</span></li>
+        <li class="feat"><span class="feat-name">direct over tailscale</span><span class="feat-desc"><code>manycode join CODE --host 100.x.y.z:42518</code> connects straight through. no relay, no extra server.</span></li>
+        <li class="feat"><span class="feat-name">read-only mode</span><span class="feat-desc"><code>manycode host --read-only</code> lets friends watch a session without touching it. good for demos and rubber-ducking.</span></li>
+        <li class="feat"><span class="feat-name">not just claude</span><span class="feat-desc"><code>manycode host codex</code>, <code>manycode host opencode</code>, <code>manycode host kimi</code> - it is a pty mirror, so every terminal agent works. claude is just the default.</span></li>
+        <li class="feat"><span class="feat-name">30-second onboarding</span><span class="feat-desc"><code>manycode setup</code> (auto on first host) asks your name, finds the agents you have installed, and saves your defaults to <code>~/.manycode/config.json</code>. flags always override.</span></li>
         <li class="feat"><span class="feat-name">both directions</span><span class="feat-desc">you host and they join, or they host and you join. same command, either side.</span></li>
       </ul>
     </section>
@@ -201,15 +201,15 @@
 
     <div class="col-wide">
       <footer class="footer">
-        <span><span class="green">$</span> ccshare &middot; MIT license</span>
-        <span>~2k lines of node &middot; built on <a href="https://github.com/microsoft/node-pty">node-pty</a> + <a href="https://github.com/websockets/ws">ws</a> + <a href="https://github.com/xtermjs/xterm.js">xterm.js</a> &middot; <a href="https://github.com/unworld11/ccshare">github.com/unworld11/ccshare</a></span>
+        <span><span class="green">$</span> manycode &middot; MIT license</span>
+        <span>~2k lines of node &middot; built on <a href="https://github.com/microsoft/node-pty">node-pty</a> + <a href="https://github.com/websockets/ws">ws</a> + <a href="https://github.com/xtermjs/xterm.js">xterm.js</a> &middot; <a href="https://github.com/unworld11/manycode">github.com/unworld11/manycode</a></span>
       </footer>
     </div>
 
     <script>
       const btn = document.getElementById('copybtn');
       btn.addEventListener('click', () => {
-        const cmd = 'curl -fsSL https://getccshare.vercel.app/install.sh | sh';
+        const cmd = 'curl -fsSL https://manycode.vercel.app/install.sh | sh';
         if (navigator.clipboard) navigator.clipboard.writeText(cmd);
         btn.textContent = 'copied';
         setTimeout(() => { btn.textContent = 'copy'; }, 1600);

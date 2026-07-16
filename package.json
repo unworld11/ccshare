@@ -1,10 +1,11 @@
 {
-  "name": "ccshare",
-  "version": "0.3.1",
-  "description": "Multiplayer Claude Code - share your live session with a code, like AirDrop",
+  "name": "manycode",
+  "version": "0.4.0",
+  "description": "Multiplayer coding agents - share your live session with a code, like AirDrop",
   "license": "MIT",
   "bin": {
-    "ccshare": "bin/ccshare.js"
+    "manycode": "bin/manycode.js",
+    "ccshare": "bin/manycode.js"
   },
   "scripts": {
     "test": "node test/smoke.js && node test/edges.js",

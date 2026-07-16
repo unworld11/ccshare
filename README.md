@@ -1,12 +1,15 @@
-# ccshare - multiplayer Claude Code
+# manycode - multiplayer coding agents
 
-**[getccshare.vercel.app](https://getccshare.vercel.app)**
+**[manycode.vercel.app](https://manycode.vercel.app)**
 
-[![installs](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Funworld11%2Fccshare%2Ftraffic%2Fbadge.json&style=flat)](https://getccshare.vercel.app)
-[![GitHub stars](https://img.shields.io/github/stars/unworld11/ccshare?style=flat&color=d97757&label=stars)](https://github.com/unworld11/ccshare/stargazers)
-[![latest release](https://img.shields.io/github/v/release/unworld11/ccshare?style=flat&color=86c48e&label=release)](https://github.com/unworld11/ccshare/releases)
-[![license](https://img.shields.io/github/license/unworld11/ccshare?style=flat&color=8a94a0)](LICENSE)
+[![installs](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Funworld11%2Fmanycode%2Ftraffic%2Fbadge.json&style=flat)](https://manycode.vercel.app)
+[![GitHub stars](https://img.shields.io/github/stars/unworld11/manycode?style=flat&color=d97757&label=stars)](https://github.com/unworld11/manycode/stargazers)
+[![latest release](https://img.shields.io/github/v/release/unworld11/manycode?style=flat&color=86c48e&label=release)](https://github.com/unworld11/manycode/releases)
+[![license](https://img.shields.io/github/license/unworld11/manycode?style=flat&color=8a94a0)](LICENSE)
 [![Product Hunt](https://img.shields.io/badge/Product%20Hunt-ccshare-da552f?style=flat)](https://www.producthunt.com/products/ccshare)
+
+> manycode was called **ccshare** until July 2026 - same tool, wider name. The
+> `ccshare` command keeps working, and existing installs update in place.
 
 Share your live Claude Code session with friends using a short code, AirDrop-style.
 The host runs your agent in a PTY and mirrors the terminal; everyone who joins sees
@@ -16,31 +19,31 @@ in both directions - you host and they join, or they host and you join.
 Claude Code is the default, but any terminal agent works - name it after `host`:
 
 ```sh
-ccshare host              # claude
-ccshare host codex        # openai codex cli
-ccshare host opencode     # opencode
-ccshare host kimi         # kimi cli
-ccshare host aider --model gpt-5   # args pass straight through
+manycode host              # claude
+manycode host codex        # openai codex cli
+manycode host opencode     # opencode
+manycode host kimi         # kimi cli
+manycode host aider --model gpt-5   # args pass straight through
 ```
 
 ## Install (and update)
 
 ```sh
-curl -fsSL https://getccshare.vercel.app/install.sh | sh
+curl -fsSL https://manycode.vercel.app/install.sh | sh
 ```
 
 One command for everything: fresh install, and re-run it any time to update (it
-clones to `~/ccshare`, or hard-updates the existing clone when it's clean). Prefer
-doing it by hand? `git clone`, `npm i`, `npm link` works too - and `ccshare update`
-pulls the latest once you're installed. If `ccshare` isn't found after `npm link`
+clones to `~/manycode`, or hard-updates the existing clone when it's clean). Prefer
+doing it by hand? `git clone`, `npm i`, `npm link` works too - and `manycode update`
+pulls the latest once you're installed. If `manycode` isn't found after `npm link`
 (homebrew's node links into the Cellar, which isn't on PATH), the installer handles
-it; manually it's `ln -sf "$PWD/bin/ccshare.js" /opt/homebrew/bin/ccshare`.
+it; manually it's `ln -sf "$PWD/bin/manycode.js" /opt/homebrew/bin/manycode`.
 
-Then run `ccshare setup` (or just `ccshare host` - it onboards you the first time):
+Then run `manycode setup` (or just `manycode host` - it onboards you the first time):
 a 30-second interactive wizard that asks your display name, detects which coding
 agents you have installed and sets your default, and picks tunnel + menu bar
-preferences. Everything lands in `~/.ccshare/config.json`; per-session flags always
-win over it, and rerunning `ccshare setup` changes it any time.
+preferences. Everything lands in `~/.manycode/config.json`; per-session flags always
+win over it, and rerunning `manycode setup` changes it any time.
 
 node-pty ships prebuilt binaries, but npm strips the exec bit off its
 `spawn-helper` - the postinstall script in this package restores it. If claude
@@ -50,11 +53,11 @@ ever fails to start with `posix_spawnp failed`, run `npm rebuild` here.
 
 ```sh
 # you, in your project directory
-ccshare host
+manycode host
 #   code:  7KQ 2FM
 
 # your friend, anywhere on the same network
-ccshare join 7KQ2FM
+manycode join 7KQ2FM
 ```
 
 Discovery is a UDP broadcast carrying a hash of the code, so `join` finds the host
@@ -67,8 +70,8 @@ Three options, easiest first:
 - **Tunnel (on by default):** hosting opens a free Cloudflare quick tunnel in the
   background - `cloudflared` comes bundled via npm, so there is nothing to install
   and no account needed. A few seconds later the remote join command - like
-  `ccshare join 7KQ2FM --host wss://random-words.trycloudflare.com` - appears in the
-  menu bar ("copy remote join command") and in `ccshare code`. That command works
+  `manycode join 7KQ2FM --host wss://random-words.trycloudflare.com` - appears in the
+  menu bar ("copy remote join command") and in `manycode code`. That command works
   from any network. The URL is random, unguessable, and dies with your session.
   `--tunnel` waits at startup so the link prints in the banner instead;
   `--no-tunnel` keeps the session off the internet entirely. Join falls back to
@@ -76,7 +79,17 @@ Three options, easiest first:
   negative answer.
 
   Note for friends who cloned early: joining a `wss://` URL needs the current
-  version, so have them `git pull` in their ccshare checkout.
+  version, so have them `git pull` in their manycode checkout.
+
+- **Tailscale (or any reachable IP):** the host banner prints a direct line like
+  `manycode join 7KQ2FM --host 192.168.1.4:42518` - swap in the tailnet IP and it
+  connects straight through, no extra server.
+- **Relay:** one of you runs `manycode relay` on any box with a public address
+  (a $0 Fly/Railway/Render instance works - it respects `PORT`). Then everyone puts
+  `export MANYCODE_RELAY=wss://your-relay` in their shell profile. With that set,
+  `manycode host` registers with the relay automatically and `manycode join CODE`
+  falls back to it when LAN discovery finds nothing. The relay is a dumb pipe; it
+  never sees your code in plaintext discovery, just relays frames for paired rooms.
 
 ## Join from a browser - nothing to install
 
@@ -87,16 +100,7 @@ they're in the live session from any browser - phone included - with the code
 prefilled; no git clone, no node, nothing. It's a full xterm.js terminal speaking
 the same protocol as the CLI joiner, so they see the same screen and can type
 unless the session is `--read-only`. The link shows in the host banner, the menu
-bar ("copy browser link"), and `ccshare code`.
-- **Tailscale (or any reachable IP):** the host banner prints a direct line like
-  `ccshare join 7KQ2FM --host 192.168.1.4:42518` - swap in the tailnet IP and it
-  connects straight through, no extra server.
-- **Relay:** one of you runs `ccshare relay` on any box with a public address
-  (a $0 Fly/Railway/Render instance works - it respects `PORT`). Then everyone puts
-  `export CCSHARE_RELAY=wss://your-relay` in their shell profile. With that set,
-  `ccshare host` registers with the relay automatically and `ccshare join CODE`
-  falls back to it when LAN discovery finds nothing. The relay is a dumb pipe; it
-  never sees your code in plaintext discovery, just relays frames for paired rooms.
+bar ("copy browser link"), and `manycode code`.
 
 ## The code scrolled away?
 
@@ -108,10 +112,10 @@ code back:
   the browser link; open the anywhere-tunnel on a lan-only session; end the session;
   and get notifications when friends join or leave. It compiles itself from
   `menubar/menubar.swift` on first run (needs the Xcode command line tools) and quits
-  when your sessions end. `ccshare host --no-menubar` opts out; `ccshare menubar`
+  when your sessions end. `manycode host --no-menubar` opts out; `manycode menubar`
   starts it by hand and keeps it running.
-- **`ccshare code`** - prints the code, project, and joiner list for every active
-  session, on any platform. `ccshare stop [code]` ends a session from any terminal
+- **`manycode code`** - prints the code, project, and joiner list for every active
+  session, on any platform. `manycode stop [code]` ends a session from any terminal
   without switching back to the one hosting it.
 
 ## Group sessions and late invites
@@ -119,29 +123,29 @@ code back:
 Up to 5 friends can be in one session (`--max` changes that); everyone sees the same
 screen and everyone can type. Nobody has to be there at the start - the code works
 for the whole session, and late joiners get the recent scrollback replayed plus a
-fresh repaint. Started lan-only and now want someone remote? `ccshare tunnel` opens
+fresh repaint. Started lan-only and now want someone remote? `manycode tunnel` opens
 the anywhere-link on the running session and prints the join command - no restart.
 
 ## Useful flags
 
-- `ccshare host --read-only` - friends can watch but not type.
-- `ccshare host --approve` - each joiner waits until you click Allow in a macOS
-  dialog; `ccshare setup` can make that the default, `--no-approve` skips it for
+- `manycode host --read-only` - friends can watch but not type.
+- `manycode host --approve` - each joiner waits until you click Allow in a macOS
+  dialog; `manycode setup` can make that the default, `--no-approve` skips it for
   one session.
-- `ccshare host --record` - saves the whole session as an asciinema `.cast` file
+- `manycode host --record` - saves the whole session as an asciinema `.cast` file
   in the project directory; play it back with `asciinema play` or upload it to
   asciinema.org.
-- `ccshare host -- --resume` - everything after `--` goes to claude itself.
-- `ccshare host <anything>` - share any terminal program, agents or otherwise.
-- `ccshare join CODE --name dev-priya` - how you appear on the host's side.
-- `ccshare host --max 2` - cap joiners (default 5).
+- `manycode host -- --resume` - everything after `--` goes to claude itself.
+- `manycode host <anything>` - share any terminal program, agents or otherwise.
+- `manycode join CODE --name dev-priya` - how you appear on the host's side.
+- `manycode host --max 2` - cap joiners (default 5).
 
 ## How it behaves
 
 - The PTY runs at the smallest connected terminal, tmux-style, so everyone sees the
   same frame. When someone joins, resize + a repaint jiggle gives them a fresh screen;
   they also get the recent scrollback (last 256KB) replayed.
-- New joiners ring a bell on the host and the terminal title shows `ccshare CODE · N connected`.
+- New joiners ring a bell on the host and the terminal title shows `manycode CODE · N connected`.
 - The session dies when claude exits on the host; joiners are told and dropped.
 
 ## Security, plainly

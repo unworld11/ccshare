@@ -1,8 +1,18 @@
 # Changelog
 
-ccshare installs and updates straight from git (`ccshare update` is a `git pull`),
+manycode installs and updates straight from git (`manycode update` is a `git pull`),
 so what you actually run is `master` HEAD - these tags just mark the points worth
 naming.
+
+## 0.4.0
+
+- **ccshare is now manycode.** Same tool, wider name - it was never only about
+  Claude Code, and the sessions were never only two people. Nothing breaks:
+  the `ccshare` command keeps working as an alias, `~/.ccshare` migrates to
+  `~/.manycode` automatically on first run, `CCSHARE_*` environment variables
+  are still honored (`MANYCODE_*` is the new spelling), the github repo
+  redirects from the old URL, and existing installs update in place - this very
+  update notice is proof.
 
 ## 0.3.1
 

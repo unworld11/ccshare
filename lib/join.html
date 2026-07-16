@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ccshare - join session</title>
+<title>manycode - join session</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0d10'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='bold' fill='%2386c48e' text-anchor='middle'%3E%24%3C/text%3E%3C/svg%3E" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
@@ -41,7 +41,7 @@
 </head>
 <body>
 <div id="bar">
-  <span class="brand">ccshare</span>
+  <span class="brand">manycode</span>
   <span class="code" id="barcode"></span>
   <span class="status" id="barstatus">not connected</span>
   <span class="hint" id="barhint"></span>
@@ -49,7 +49,7 @@
 <div id="wrap"><div id="term"></div></div>
 <div id="overlay">
   <div id="card">
-    <h1>join a <span>ccshare</span> session</h1>
+    <h1>join a <span>manycode</span> session</h1>
     <p>live terminal, right in this tab - nothing to install.</p>
     <label for="code">session code</label>
     <input id="code" autocomplete="off" spellcheck="false" placeholder="7KQ2FM" />
@@ -77,7 +77,7 @@
   var normalize = function (s) { return String(s || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); };
   var hashCode = normalize(location.hash.slice(1));
   $('code').value = hashCode;
-  $('name').value = localStorage.getItem('ccshare-name') || '';
+  $('name').value = localStorage.getItem('manycode-name') || '';
   ($('code').value ? $('name') : $('code')).focus();
 
   var ws = null, replayed = false, pending = [], readOnly = false, joined = false;
@@ -101,7 +101,7 @@
     var code = normalize($('code').value);
     var name = $('name').value.trim() || 'browser-friend';
     if (code.length < 4) return msg('that code looks too short', true);
-    localStorage.setItem('ccshare-name', name);
+    localStorage.setItem('manycode-name', name);
     msg('connecting…');
     $('barcode').textContent = code.slice(0, 3) + ' ' + code.slice(3);
 

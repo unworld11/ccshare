@@ -1,24 +1,26 @@
 #!/bin/sh
-# ccshare installer and updater - safe to re-run any time.
-#   curl -fsSL https://getccshare.vercel.app/install.sh | sh
+# manycode installer and updater - safe to re-run any time.
+#   curl -fsSL https://manycode.vercel.app/install.sh | sh
 set -e
 
-REPO="https://github.com/unworld11/ccshare"
-DIR="${CCSHARE_DIR:-$HOME/ccshare}"
+REPO="https://github.com/unworld11/manycode"
+DIR="${MANYCODE_DIR:-${CCSHARE_DIR:-$HOME/manycode}}"
+# manycode was born as ccshare - keep updating an existing checkout
+if [ ! -d "$DIR/.git" ] && [ -d "$HOME/ccshare/.git" ]; then DIR="$HOME/ccshare"; fi
 
 for tool in git node npm; do
   if ! command -v "$tool" >/dev/null 2>&1; then
-    echo "ccshare: $tool is required but not installed - install it and re-run"
+    echo "manycode: $tool is required but not installed - install it and re-run"
     exit 1
   fi
 done
 
 if [ -d "$DIR/.git" ]; then
-  echo "ccshare: found existing install at $DIR - updating"
+  echo "manycode: found existing install at $DIR - updating"
   # npm install rewrites the lockfile; that isn't a user edit
   git -C "$DIR" checkout -- package-lock.json 2>/dev/null || true
   if [ -n "$(git -C "$DIR" status --porcelain)" ]; then
-    echo "ccshare: you have local changes in $DIR - stash or commit them, then re-run"
+    echo "manycode: you have local changes in $DIR - stash or commit them, then re-run"
     exit 1
   fi
   git -C "$DIR" fetch origin
@@ -33,22 +35,22 @@ npm link >/dev/null 2>&1 || true
 
 # npm link can land in a bin dir that isn't on PATH (homebrew node keeps its
 # own Cellar); fall back to a symlink somewhere that is
-if ! command -v ccshare >/dev/null 2>&1; then
-  BIN="$DIR/bin/ccshare.js"
+if ! command -v manycode >/dev/null 2>&1; then
+  BIN="$DIR/bin/manycode.js"
   for d in /opt/homebrew/bin /usr/local/bin; do
     if [ -d "$d" ] && [ -w "$d" ]; then
-      ln -sf "$BIN" "$d/ccshare"
+      ln -sf "$BIN" "$d/manycode"
       break
     fi
   done
 fi
 
 echo ""
-if command -v ccshare >/dev/null 2>&1; then
-  echo "ccshare $(git -C "$DIR" rev-parse --short HEAD) ready."
-  echo "next: ccshare setup   (30-second onboarding, or just run: ccshare host)"
+if command -v manycode >/dev/null 2>&1; then
+  echo "manycode $(git -C "$DIR" rev-parse --short HEAD) ready."
+  echo "next: manycode setup   (30-second onboarding, or just run: manycode host)"
 else
-  echo "ccshare: installed at $DIR but no writable bin dir on PATH."
+  echo "manycode: installed at $DIR but no writable bin dir on PATH."
   echo "add this line to your shell profile:"
-  echo "  alias ccshare=\"node $DIR/bin/ccshare.js\""
+  echo "  alias manycode=\"node $DIR/bin/manycode.js\""
 fi

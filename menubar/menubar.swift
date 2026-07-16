@@ -1,14 +1,14 @@
 import AppKit
 import Foundation
 
-// ccshare menu bar helper. Shows active session codes from
-// ~/.ccshare/sessions/*.json, copies join commands, notifies on joins.
-// Launched by `ccshare host` with --auto (exits when no sessions remain)
-// or by `ccshare menubar` without it (stays until quit).
+// manycode menu bar helper. Shows active session codes from
+// ~/.manycode/sessions/*.json, copies join commands, notifies on joins.
+// Launched by `manycode host` with --auto (exits when no sessions remain)
+// or by `manycode menubar` without it (stays until quit).
 
 let home = FileManager.default.homeDirectoryForCurrentUser
-let stateDir = home.appendingPathComponent(".ccshare/sessions")
-let pidFile = home.appendingPathComponent(".ccshare/menubar.pid")
+let stateDir = home.appendingPathComponent(".manycode/sessions")
+let pidFile = home.appendingPathComponent(".manycode/menubar.pid")
 
 // single instance
 if let data = try? Data(contentsOf: pidFile),
@@ -70,7 +70,7 @@ func notify(_ text: String) {
     let p = Process()
     p.executableURL = URL(fileURLWithPath: "/usr/bin/osascript")
     let esc = text.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\"")
-    p.arguments = ["-e", "display notification \"\(esc)\" with title \"ccshare\""]
+    p.arguments = ["-e", "display notification \"\(esc)\" with title \"manycode\""]
     try? p.run()
 }
 
@@ -187,7 +187,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 string: "no active session\n",
                 attributes: [.font: NSFont.systemFont(ofSize: 13, weight: .semibold), .foregroundColor: NSColor.labelColor])
             t.append(NSAttributedString(
-                string: "run ccshare host to start one",
+                string: "run manycode host to start one",
                 attributes: [.font: NSFont.monospacedSystemFont(ofSize: 11, weight: .regular), .foregroundColor: NSColor.secondaryLabelColor]))
             head.attributedTitle = t
             menu.addItem(head)
@@ -214,17 +214,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             menu.addItem(head)
 
             addRow(menu, "copy code", icon: "doc.on.doc", action: #selector(copyItem(_:)), payload: s.code)
-            addRow(menu, "copy join command", icon: "arrow.right.doc.on.clipboard", action: #selector(copyItem(_:)), payload: "ccshare join \(s.code)")
+            addRow(menu, "copy join command", icon: "arrow.right.doc.on.clipboard", action: #selector(copyItem(_:)), payload: "manycode join \(s.code)")
             if let ip = s.ip, let port = s.port {
-                addRow(menu, "copy direct join command", icon: "network", action: #selector(copyItem(_:)), payload: "ccshare join \(s.code) --host \(ip):\(port)")
+                addRow(menu, "copy direct join command", icon: "network", action: #selector(copyItem(_:)), payload: "manycode join \(s.code) --host \(ip):\(port)")
             }
             if let t = s.tunnel {
-                addRow(menu, "copy anywhere join command", icon: "globe", action: #selector(copyItem(_:)), payload: "ccshare join \(s.code) --host \(t)")
+                addRow(menu, "copy anywhere join command", icon: "globe", action: #selector(copyItem(_:)), payload: "manycode join \(s.code) --host \(t)")
                 addRow(menu, "copy anywhere terminal link", icon: "link", action: #selector(copyItem(_:)), payload: t)
             } else if s.tunnelOpening == true || tunnelAsked[s.pid] != nil {
                 addRow(menu, "opening anywhere link\u{2026}", icon: "hourglass")
             } else {
-                // same mechanism as `ccshare tunnel`: drop a request file, the
+                // same mechanism as `manycode tunnel`: drop a request file, the
                 // host picks it up within a couple of seconds
                 addRow(menu, "open anywhere link\u{2026}", icon: "globe", action: #selector(openTunnel(_:)), payload: String(s.pid))
             }
@@ -249,7 +249,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             menu.addItem(.separator())
         }
 
-        let quit = NSMenuItem(title: "quit ccshare menu", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "")
+        let quit = NSMenuItem(title: "quit manycode menu", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "")
         quit.target = NSApp
         quit.image = symbol("power")
         menu.addItem(quit)

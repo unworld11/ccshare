@@ -5,7 +5,7 @@ const { spawn } = require('child_process');
 const path = require('path');
 const WebSocket = require('ws');
 
-const BIN = path.join(__dirname, '..', 'bin', 'ccshare.js');
+const BIN = path.join(__dirname, '..', 'bin', 'manycode.js');
 let failures = 0;
 
 function wait(ms) { return new Promise((r) => setTimeout(r, ms)); }
@@ -75,7 +75,7 @@ async function testRelay() {
   let host = null;
   try {
     await wait(600);
-    // positional command form: `ccshare host bash -c …`, like `ccshare host codex`
+    // positional command form: `manycode host bash -c …`, like `manycode host codex`
     host = spawn('node', [
       BIN, 'host', '--relay', 'ws://127.0.0.1:45998', '--no-menubar', '--no-tunnel', '--port', '45997', '--code', 'TEST43',
       'bash', '-c', 'echo MARKER_READY; exec cat',
