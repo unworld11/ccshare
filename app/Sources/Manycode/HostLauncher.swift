@@ -21,7 +21,10 @@ enum HostLauncher {
         p.executableURL = URL(fileURLWithPath: "/bin/zsh")
         // login shell so the installed `manycode` is on PATH even when the app
         // wasn't launched from a terminal
-        p.arguments = ["-lc", "command -v manycode >/dev/null || exit 127; exec manycode host --no-menubar"]
+        // --no-chat-notify: the app shows chat in-window and is itself a joiner
+        // to this session, so the CLI's macOS popups would notify us about our
+        // own messages.
+        p.arguments = ["-lc", "command -v manycode >/dev/null || exit 127; exec manycode host --no-menubar --no-chat-notify"]
         p.currentDirectoryURL = folder
         p.standardInput = FileHandle.nullDevice
         p.standardOutput = FileHandle.nullDevice

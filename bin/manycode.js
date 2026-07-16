@@ -153,6 +153,7 @@ if (cmd === 'host') {
     '--record': 'record',
     '--share-secrets': 'shareSecrets',
     '--redact-secrets': 'redactSecrets',
+    '--no-chat-notify': 'noChatNotify',
   });
   const relay = o.noRelay ? null : (o.relay || process.env.MANYCODE_RELAY || process.env.CCSHARE_RELAY || null);
   for (const [flag, key] of [['--port', 'port'], ['--max', 'max']]) {
@@ -179,6 +180,7 @@ if (cmd === 'host') {
       record: !!o.record,
       shareSecrets: !!o.shareSecrets,
       redactSecrets: !!o.redactSecrets,
+      chatNotify: !o.noChatNotify,
       claudeArgs: cmdline ? cmdline.slice(1).concat(o.rest || []) : (o.rest || []),
     });
   })().catch((e) => die('manycode: ' + e.message));

@@ -125,7 +125,7 @@ function joinTrace(port, code, timeoutMs = 5000) {
   h5.p.kill('SIGKILL');
 
   // chat: A's message reaches B (not echoed to A), late joiner C gets the log
-  const h7 = run(['host', '--no-relay', '--no-menubar', '--no-tunnel', '--port', '45973', '--code', 'CHAT42', 'bash', '-c', 'sleep 20']);
+  const h7 = run(['host', '--no-relay', '--no-menubar', '--no-tunnel', '--no-chat-notify', '--port', '45973', '--code', 'CHAT42', 'bash', '-c', 'sleep 20']);
   await wait(1200);
   const joinChat = (name) => new Promise((resolve, reject) => {
     const ws = new WebSocket('ws://127.0.0.1:45973');
