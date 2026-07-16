@@ -42,6 +42,11 @@
       .install-scroll{overflow-x:auto;white-space:nowrap;flex:1;min-width:0;scrollbar-width:none}
       .copybtn{flex:none;background:none;border:1px solid #232a33;border-radius:4px;color:#8a94a0;font-family:inherit;font-size:12px;padding:4px 10px;cursor:pointer}
       .copybtn:hover{border-color:#d97757;color:#d97757}
+      .dl-row{display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+      .dl-btn{display:inline-flex;align-items:center;gap:9px;background:#d97757;color:#0b0d10;font-weight:600;font-size:14px;text-decoration:none;padding:11px 20px;border-radius:7px}
+      .dl-btn:hover{filter:brightness(1.08)}
+      .dl-btn svg{display:block}
+      .dl-note{font-size:12px;color:#5c6570}
       .hero-sub{margin-top:14px;font-size:13px;color:#5c6570}
       .hero-sub a{color:#8a94a0}
       .ph-badge{display:inline-flex;margin-top:18px;line-height:0}
@@ -103,12 +108,19 @@
     <header class="hero col-narrow">
       <h1 class="h1"><span class="h1line">multiplayer</span><span class="h1line">coding agents<span class="orange">.</span></span></h1>
       <p class="lede">share your live Claude Code session with a 6-char code, AirDrop-style. your friend joins from their terminal - or just <b>opens a link in their browser</b>, nothing to install - sees your exact screen, and <b>both of you can type</b>. works over your wifi with zero setup, or anywhere through a free tunnel.</p>
+      <div class="dl-row">
+        <a class="dl-btn" href="https://github.com/unworld11/manycode/releases/latest/download/Manycode.dmg" download>
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.5v8.5M4.5 6.5 8 10l3.5-3.5M2.5 13.5h11"/></svg>
+          Download for Mac
+        </a>
+        <span class="dl-note">macOS 13+ &middot; drag into Applications</span>
+      </div>
       <div class="install">
         <span class="install-prompt">$</span>
         <span class="install-scroll" id="install-cmd">curl -fsSL https://manycode.vercel.app/install.sh | sh</span>
         <button class="copybtn" id="copybtn" type="button">copy</button>
       </div>
-      <p class="hero-sub">installs to ~/manycode, onboards you on first run; re-run the same command to update &middot; MIT &middot; no accounts &middot; no telemetry &middot; <a href="https://github.com/unworld11/manycode">source on github</a></p>
+      <p class="hero-sub">the app bundles nothing extra &mdash; it drives the same CLI, which the one-liner installs (onboards on first run, re-run to update) &middot; MIT &middot; no accounts &middot; no telemetry &middot; <a href="https://github.com/unworld11/manycode">source on github</a></p>
       <a class="ph-badge" href="https://www.producthunt.com/products/ccshare?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-manycode" target="_blank" rel="noopener noreferrer"><img alt="manycode - multiplayer claude code | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1196065&amp;theme=dark&amp;t=1784018637191"></a>
     </header>
 
@@ -176,6 +188,7 @@
       <ul class="featlist">
         <li class="feat"><span class="feat-name">smallest terminal wins</span><span class="feat-desc">the pty resizes to the smallest connected terminal, tmux-style, so everyone sees the same frame. joiners get 256KB of scrollback replayed plus a forced repaint.</span></li>
         <li class="feat"><span class="feat-name">tunnel anywhere</span><span class="feat-desc">hosting opens a free cloudflare quick tunnel by default. cloudflared comes bundled, no account needed. friends on any network join through a random wss:// url that dies with your session. <code>--no-tunnel</code> keeps it lan-only.</span></li>
+        <li class="feat"><span class="feat-name">native mac app</span><span class="feat-desc"><a href="https://github.com/unworld11/manycode/releases/latest/download/Manycode.dmg" download>download the DMG</a>, drag manycode into Applications. a green terminal-native window - host or join, live terminal, invite code, room chat in a sidebar. it speaks the same protocol and drives the same CLI underneath. unsigned for now, so first launch is right-click &rarr; Open.</span></li>
         <li class="feat"><span class="feat-name">join from a browser</span><span class="feat-desc">every session has a link like <code>https://&hellip;.trycloudflare.com/#7KQ2FM</code> that opens a full live terminal in any browser - phone included. nothing to install, code prefilled, same screen and typing as the cli.</span></li>
         <li class="feat"><span class="feat-name">approve each joiner</span><span class="feat-desc"><code>manycode host --approve</code> holds every joiner - right code and all - until you click allow in a macos dialog. make it your default with <code>manycode setup</code>.</span></li>
         <li class="feat"><span class="feat-name">record the session</span><span class="feat-desc"><code>manycode host --record</code> saves an asciinema .cast of everything everyone saw. replay it with <code>asciinema play</code> or upload it to asciinema.org.</span></li>
