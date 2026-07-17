@@ -1,11 +1,15 @@
 #!/bin/bash
-# Build Manycode.app (release, ad-hoc signed) and a drag-to-Applications DMG.
+# Build manycode.app (release) and a drag-to-Applications DMG.
 #   ./build-dmg.sh   ->   .build/Manycode.dmg
 #
-# The DMG is unsigned/un-notarized, so a downloaded copy is Gatekeeper-
-# quarantined: first launch is right-click → Open (or `xattr -dr
-# com.apple.quarantine /Applications/manycode.app`). Real fix later: a
-# Developer ID + notarization.
+# Signing/notarization is automatic when credentials are in the environment;
+# without them the app is ad-hoc signed (Gatekeeper-quarantined, first launch
+# is right-click → Open). To kill the Apple warning for downloaders, enroll in
+# the Apple Developer Program and set (see NOTARIZE.md):
+#   MANYCODE_SIGN_ID  "Developer ID Application: Your Name (TEAMID)"
+#   APPLE_ID          your Apple ID email
+#   APPLE_TEAM_ID     your 10-char Team ID
+#   APPLE_APP_PW      an app-specific password (appleid.apple.com)
 set -e
 cd "$(dirname "$0")"
 
@@ -28,8 +32,13 @@ cp "$BUILD/release/Manycode" "$APP/Contents/MacOS/Manycode"
 cp Info.plist "$APP/Contents/Info.plist"
 cp "$BUILD/Manycode.icns" "$APP/Contents/Resources/Manycode.icns"
 
-echo "▸ ad-hoc sign"
-codesign --force --deep --sign - "$APP"
+if [ -n "$MANYCODE_SIGN_ID" ]; then
+  echo "▸ sign (Developer ID, hardened runtime)"
+  codesign --force --deep --options runtime --timestamp --sign "$MANYCODE_SIGN_ID" "$APP"
+else
+  echo "▸ ad-hoc sign (no MANYCODE_SIGN_ID → unsigned download will warn)"
+  codesign --force --deep --sign - "$APP"
+fi
 
 echo "▸ dmg"
 STAGE="$BUILD/dmg"
@@ -40,4 +49,15 @@ rm -f "$BUILD/Manycode.dmg"
 hdiutil create -volname "$APP_NAME" -srcfolder "$STAGE" -ov -format UDZO "$BUILD/Manycode.dmg" >/dev/null
 rm -rf "$STAGE"
 
-echo "✓ $BUILD/Manycode.dmg"
+# Notarize + staple so downloaders don't see the "unidentified developer"
+# warning. Needs the Apple ID / team / app-specific password.
+if [ -n "$MANYCODE_SIGN_ID" ] && [ -n "$APPLE_ID" ] && [ -n "$APPLE_TEAM_ID" ] && [ -n "$APPLE_APP_PW" ]; then
+  echo "▸ notarize (this waits on Apple, ~1-5 min)"
+  xcrun notarytool submit "$BUILD/Manycode.dmg" \
+    --apple-id "$APPLE_ID" --team-id "$APPLE_TEAM_ID" --password "$APPLE_APP_PW" --wait
+  echo "▸ staple"
+  xcrun stapler staple "$BUILD/Manycode.dmg"
+  echo "✓ $BUILD/Manycode.dmg (signed + notarized - no Gatekeeper warning)"
+else
+  echo "✓ $BUILD/Manycode.dmg (unsigned - downloaders right-click → Open on first launch)"
+fi
